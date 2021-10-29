@@ -8,7 +8,11 @@ app.set('view engine', 'pug');
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', {title: 'Title', pageheading: 'Click on the Cat'});
+})
+
+app.get('/page2', (req, res) => {
+  res.render('page2', {title: 'Title - Page 2', pageheading: 'This is page 2', page2heading: 'Some extra'});
 })
 
 app.get('/hello', (req, res) => {
