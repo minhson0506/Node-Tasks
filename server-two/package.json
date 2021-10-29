@@ -1,0 +1,24 @@
+{
+  "name": "server-one",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minhson0506/Node-Tasks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/minhson0506/Node-Tasks/issues"
+  },
+  "homepage": "https://github.com/minhson0506/Node-Tasks#readme",
+  "description": ""
+}
