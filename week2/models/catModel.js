@@ -15,10 +15,9 @@ const getAllCats = async () => {
 const getCat = async (catId) => {
   try {
     const [row] = await promisePool.execute(
-      'SELECT * FROM wop_cat WHERE cat_id = ?',
-      [catId]
+      'SELECT * FROM wop_cat WHERE cat_id = ?', [catId]
     );
-    return row;
+    return row[0];
   } catch (e) {
     console.error('error', e.message);
   }
@@ -26,10 +25,12 @@ const getCat = async (catId) => {
 
 const insertCat = async (cat) => {
   try {
+    console.log(cat);
     const [row] = await promisePool.execute(
       `INSERT INTO wop_cat (name, weight, owner, birthdate, filename) VALUES (?,?,?,?,?)`,
-      [cat.name, cat.weight, cat.owner, cat.birthdate, cat.fileName]
+      [cat.name, cat.weight, cat.owner, cat.birthdate, cat.filename]
     );
+    console.log(row);
     return row.insertId;
   } catch (e) {
     console.error(e.message);
@@ -42,7 +43,7 @@ const deleteCat = async (catId) => {
       'DELETE FROM wop_cat WHERE cat_id = ?',
       [catId]
     );
-    return rows;
+    return rows.affectedRows === 1;
   } catch (e) {
     console.error(e.message);
   }
@@ -50,9 +51,10 @@ const deleteCat = async (catId) => {
 
 const updateCat = async (cat) => {
   try {
+    let birthdate = cat.birthdate.toString().substring(0,10);
     const [rows] = await promisePool.execute(
       'UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate =? WHERE cat_Id = ?',
-      [cat.name, cat.weight, cat.owner, cat.birthdate, cat.id]
+      [cat.name, cat.weight, cat.owner, birthdate, cat.id]
     );
     return rows.affectedRows === 1;
   } catch (e) {

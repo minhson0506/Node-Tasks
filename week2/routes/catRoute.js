@@ -23,6 +23,6 @@ router.post('/', upload.single('cat'), cat_post);
 
 router.put('/', cat_update);
 
-router.delete('/', cat_delete);
+router.delete('/:catId', cat_delete);
 
 module.exports = router;

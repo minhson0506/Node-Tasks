@@ -2,7 +2,7 @@
 // userRoute
 
 const express = require('express');
-const { user_list_get, user_get, user_post } = require('../controllers/userController');
+const { user_list_get, user_get, user_post, user_delete, user_update } = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -12,12 +12,8 @@ router.get('/:userId', user_get);
 
 router.post('/', user_post);
 
-router.put('/', (req, res) => {
-  res.send('Put');
-});
+router.put('/', user_update);
 
-router.delete('/', (req, res) => {
-  res.send('Delete');
-});
+router.delete('/:userId', user_delete);
 
 module.exports = router;
