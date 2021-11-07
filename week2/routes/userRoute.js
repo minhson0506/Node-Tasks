@@ -2,11 +2,7 @@
 // userRoute
 
 const express = require('express');
-const {
-  user_list_get,
-  user_get,
-  user_post,
-} = require('../controllers/userController');
+const { user_list_get, user_get, user_post } = require('../controllers/userController');
 
 const router = express.Router();
 

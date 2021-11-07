@@ -1,34 +1,70 @@
 'use strict';
-const cats = [
-  {
-    id: '1',
-    name: 'Frank',
-    birthdate: '2010-10-30',
-    weight: '5',
-    owner: '1',
-    filename: 'http://placekitten.com/400/300',
-  },
-  {
-    id: '2',
-    name: 'James',
-    birthdate: '2015-12-25',
-    weight: '11',
-    owner: '2',
-    filename: 'http://placekitten.com/400/302',
-  },
-];
+
+const pool = require('../database/db');
+const promisePool = pool.promise();
 
 const getAllCats = async () => {
-  return cats;
+  try {
+    const [rows] = await promisePool.query('SELECT * FROM wop_cat');
+    return rows;
+  } catch (e) {
+    console.error('error', e.message);
+  }
 };
 
-const getCat = (catId) => {
-  console.log('id ', catId);
-  return cats.find((cat) => cat.id === catId);
+const getCat = async (catId) => {
+  try {
+    const [row] = await promisePool.execute(
+      'SELECT * FROM wop_cat WHERE cat_id = ?',
+      [catId]
+    );
+    return row;
+  } catch (e) {
+    console.error('error', e.message);
+  }
+};
+
+const insertCat = async (cat) => {
+  try {
+    const [row] = await promisePool.execute(
+      `INSERT INTO wop_cat (name, weight, owner, birthdate, filename) VALUES (?,?,?,?,?)`,
+      [cat.name, cat.weight, cat.owner, cat.birthdate, cat.fileName]
+    );
+    return row.insertId;
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
+const deleteCat = async (catId) => {
+  try {
+    const [rows] = await promisePool.execute(
+      'DELETE FROM wop_cat WHERE cat_id = ?',
+      [catId]
+    );
+    return rows;
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
+const updateCat = async (cat) => {
+  try {
+    const [rows] = await promisePool.execute(
+      'UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate =? WHERE cat_Id = ?',
+      [cat.name, cat.weight, cat.owner, cat.birthdate, cat.id]
+    );
+    return rows.affectedRows === 1;
+  } catch (e) {
+    console.error('model put cat', e.message);
+  }
+
 };
 
 module.exports = {
-  cats,
   getCat,
   getAllCats,
+  insertCat,
+  deleteCat,
+  updateCat,
 };
