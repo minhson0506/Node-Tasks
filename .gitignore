@@ -111,3 +111,6 @@ dist
 
 uploads/*
 !uploads/.gitkeep
+
+# dotenv environment variables file
+.env
