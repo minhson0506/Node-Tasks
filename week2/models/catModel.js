@@ -18,6 +18,17 @@ const cats = [
   },
 ];
 
+const getAllCats = async () => {
+  return cats;
+};
+
+const getCat = (catId) => {
+  console.log('id ', catId);
+  return cats.find((cat) => cat.id === catId);
+};
+
 module.exports = {
   cats,
+  getCat,
+  getAllCats,
 };

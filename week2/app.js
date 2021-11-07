@@ -1,29 +1,18 @@
 'use strict';
 const express = require('express');
+const cors = require('cors');
+const catRoute = require('./routes/catRoute');
+const userRoute = require('./routes/userRoute');
+
 const app = express();
 const port = 3000;
 
-app.get('/cat', (req, res) => {
-  res.send('From this endpoint you can get cats.')
-});
+app.use(cors());
 
-app.get('/cat/:id', (req, res) => {
-  console.log(req.params.id);
-  res.send(`You request a cat whose id is ${req.params.id}`)
-  //res.send('You request a cat whose id is ?', [req.params])
-}); 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// POST method route
-app.post('/cat', function (req, res) {
-  res.send('With this endpoint you can add cats.')
-});
-
-app.put('/cat', function (req, res) {
-  res.send('With this endpoint you can edit cats.')
-});
-
-app.delete('/cat', function (req, res) {
-  res.send('With this endpoint you can delete cats.')
-});
+app.use('/cat', catRoute);
+app.use('/user', userRoute);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

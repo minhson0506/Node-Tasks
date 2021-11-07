@@ -14,6 +14,11 @@ const users = [
   },
 ];
 
+const getUser = (userId) => {
+  return users.find((user) => user.id === userId);
+};
+
 module.exports = {
   users,
+  getUser,
 };
