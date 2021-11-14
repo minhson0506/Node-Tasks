@@ -11,15 +11,30 @@ const {
 } = require('../controllers/catController');
 
 const multer = require('multer');
-const upload = multer({ dest: './uploads/' });
+const { body } = require('express-validator');
+
 
 const router = express.Router();
+
+const func = (req, file, cb) => {
+    if (file.mimetype.includes('image')) {
+        cb(null, true);
+    } else cb(null, false);
+}
+
+const upload = multer({ dest: './uploads/', fileFilter: func });
 
 router.get('/', cat_list_get);
 
 router.get('/:catId', cat_get);
 
-router.post('/', upload.single('cat'), cat_post);
+router.post('/', 
+    body('name').notEmpty(),
+    body('birthdate').isDate(),
+    body('weight').isNumeric().notEmpty(),
+    body('owner').isNumeric().notEmpty(),
+    upload.single('cat'),
+    cat_post);
 
 router.put('/', cat_update);
 

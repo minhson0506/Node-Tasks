@@ -1,6 +1,7 @@
 'use strict';
 
 const pool = require('../database/db');
+const { httpError } = require('../utils/error');
 const promisePool = pool.promise();
 
 const getAllCats = async () => {
@@ -12,7 +13,7 @@ const getAllCats = async () => {
   }
 };
 
-const getCat = async (catId) => {
+const getCat = async (catId, next) => {
   try {
     const [row] = await promisePool.execute(
       'SELECT * FROM wop_cat WHERE cat_id = ?', [catId]
@@ -20,6 +21,8 @@ const getCat = async (catId) => {
     return row[0];
   } catch (e) {
     console.error('error', e.message);
+    const err = httpError('Sql error', 500);
+    next(err);
   }
 };
 
