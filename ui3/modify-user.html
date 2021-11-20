@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf8">
+    <title>Example</title>
+    <link href="./css/ui3.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="front.html">Frontpage</a></li>
+                <li><a href="add-cat.html">Add cat</a></li>
+                <li><a href="modify-user.html">Modify user</a></li>
+                <li><a href="logout.html">Logout</a></li>
+            </ul>
+        </nav>
+        <hr>
+        <div class="forms">
+            <div class="form-wrapper">
+                <h3>Modify user</h3>
+                <form novalidate class="light-border" id="modUserForm">
+                    <input class="light-border" type="text" required minlength="3" name="name" placeholder="Name">
+                    <input class="light-border" type="email" required name="email" placeholder="email">
+                    <input class="light-border" type="password" required pattern="(?=.*[A-Z]).{8,}" name="passwd" placeholder="Password">
+                    <button class="light-border" type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="./js/check-login.js"></script>
+    <script src="./js/serialize.js"></script>
+    <script src="./js/modify-user.js"></script>
+</body>
+
+</html>
