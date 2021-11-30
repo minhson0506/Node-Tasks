@@ -32,7 +32,8 @@ const insertCat = async(cat) => {
     try {
         console.log(cat);
         const [row] = await promisePool.execute(
-            `INSERT INTO wop_cat (name, weight, owner, birthdate, filename) VALUES (?,?,?,?,?)`, [cat.name, cat.weight, cat.owner, cat.birthdate, cat.filename]
+            `INSERT INTO wop_cat (name, weight, owner, birthdate, filename) VALUES (?,?,?,?,?)`, 
+            [cat.name, cat.weight, cat.owner, cat.birthdate, cat.filename]
         );
         console.log(row);
         return row.insertId;
@@ -60,9 +61,10 @@ const deleteCat = async(catId, user) => {
 const updateCat = async(catId, cat, user) => {
     try {
         if (user.role === 0 || user.user_id === cat.owner) {
-            //let birthdate = cat.birthdate.toString().substring(0, 10);
+            let birthdate = cat.birthdate.toString().substring(0, 10);
             const [rows] = await promisePool.execute(
-                'UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate =? WHERE cat_Id = ?', [cat.name, cat.weight, cat.owner, cat.birthdate, catId]
+                'UPDATE wop_cat SET name = ?, weight = ?, owner = ?, birthdate =? WHERE cat_Id = ?', 
+                [cat.name, cat.weight, cat.owner, birthdate, catId]
             );
             console.log('updated');
             return 'updated';

@@ -1,11 +1,11 @@
 'use strict';
-const { validationResult } = require('express-validator');
-// catController
+// userController
 
+const { validationResult } = require('express-validator');
 const { getUser, getAllUsers, insertUser, deleteUser, updateUser } = require('../models/userModel');
 const { httpError } = require('../utils/error');
 
-const user_list_get = async(req, res, next) => {
+const user_list_get = async (req, res, next) => {
     const users = await getAllUsers();
     if (users.length > 0) {
         await users.forEach((user) => delete user.password);
@@ -17,7 +17,7 @@ const user_list_get = async(req, res, next) => {
     next(err);
 };
 
-const user_get = async(req, res, next) => {
+const user_get = async (req, res, next) => {
     const user = await getUser(req.params.userId);
     if (user) {
         await delete user.password;
@@ -28,7 +28,7 @@ const user_get = async(req, res, next) => {
     next(err);
 };
 
-const user_post = async(req, res, next) => {
+const user_post = async (req, res, next) => {
     //console.log(req.body.name);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -42,7 +42,7 @@ const user_post = async(req, res, next) => {
     res.json(id);
 };
 
-const user_delete = async(req, res, next) => {
+const user_delete = async (req, res, next) => {
     const deleted = await deleteUser(req.params.userId, req.user);
     if (deleted === 'deleted') {
         console.log('deleted');
@@ -56,7 +56,7 @@ const user_delete = async(req, res, next) => {
     next(httpError('User not found', 404));
 };
 
-const user_update = async(req, res, next) => {
+const user_update = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.error('user_update validation', errors.array());

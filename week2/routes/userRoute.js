@@ -5,9 +5,7 @@ const express = require('express');
 const { body } = require('express-validator');
 const { user_list_get, user_get, user_post, user_delete, user_update, checkToken } = require('../controllers/userController');
 
-
 const router = express.Router();
-
 
 router.get('/token', checkToken);
 
@@ -30,7 +28,5 @@ router
         body('password').matches('(?=.*[A-Z]).{8,}'),
         user_update
     );
-
-
 
 module.exports = router;

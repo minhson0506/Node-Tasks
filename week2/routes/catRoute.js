@@ -13,7 +13,6 @@ const {
 const multer = require('multer');
 const { body } = require('express-validator');
 
-
 const router = express.Router();
 
 const func = (req, file, cb) => {
@@ -24,16 +23,16 @@ const func = (req, file, cb) => {
 
 const upload = multer({ dest: './uploads/', fileFilter: func });
 
-router.get('/', cat_list_get);
-
-router.post('/',
-    body('name').notEmpty(),
-    body('birthdate').isDate(),
-    body('weight').isNumeric().notEmpty(),
-    body('owner').isNumeric().notEmpty(),
-    upload.single('cat'),
-    cat_post
-);
+router
+    .get('/', cat_list_get)
+    .post('/',
+        body('name').notEmpty(),
+        body('birthdate').isDate(),
+        body('weight').isNumeric().notEmpty(),
+        body('owner').isNumeric().notEmpty(),
+        upload.single('cat'),
+        cat_post
+    );
 
 router
     .route('/:catId')
