@@ -6,6 +6,7 @@ const promisePool = pool.promise();
 const getAllUsers = async() => {
     try {
         const [rows] = await promisePool.query('SELECT * FROM wop_user');
+        console.log(rows)
         return rows;
     } catch (e) {
         console.error(e.message);

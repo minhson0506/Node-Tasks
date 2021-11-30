@@ -6,7 +6,9 @@ const promisePool = pool.promise();
 
 const getAllCats = async() => {
     try {
-        const [rows] = await promisePool.query('SELECT * FROM wop_cat');
+        const [rows] = await promisePool.query(
+            'SELECT wop_cat.*, wop_cat.owner, wop_user.name AS ownername FROM wop_cat LEFT JOIN wop_user ON wop_cat.owner = wop_user.user_id');
+        console.log(rows);
         return rows;
     } catch (e) {
         console.error('error', e.message);
@@ -16,7 +18,7 @@ const getAllCats = async() => {
 const getCat = async(catId, next) => {
     try {
         const [row] = await promisePool.execute(
-            'SELECT * FROM wop_cat WHERE cat_id = ?', [catId]
+            'SELECT wop_cat.*, wop_cat.owner, wop_user.name AS ownername FROM wop_cat LEFT JOIN wop_user ON wop_cat.owner = wop_user.user_id WHERE cat_id = ?', [catId]
         );
         return row[0];
     } catch (e) {

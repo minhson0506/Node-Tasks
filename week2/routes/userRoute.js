@@ -8,6 +8,9 @@ const { user_list_get, user_get, user_post, user_delete, user_update, checkToken
 
 const router = express.Router();
 
+
+router.get('/token', checkToken);
+
 router.get('/', user_list_get);
 
 router.post('/',
@@ -28,6 +31,6 @@ router
         user_update
     );
 
-router.get('/token', checkToken);
+
 
 module.exports = router;
