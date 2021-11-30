@@ -112,5 +112,11 @@ dist
 uploads/*
 !uploads/.gitkeep
 
+thumbnails/*
+!thumbnails/.gitkeep
+
 # dotenv environment variables file
 .env
+
+#keys
+keys/*
